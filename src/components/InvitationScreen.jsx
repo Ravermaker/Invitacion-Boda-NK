@@ -226,7 +226,7 @@ const InvitationScreen = ({ guestName }) => {
 
             {/* RSVP */}
             <ScrollReveal delay={0.4}>
-                <RSVP />
+                <RSVP guestName={guestName} />
             </ScrollReveal>
         </div>
     );

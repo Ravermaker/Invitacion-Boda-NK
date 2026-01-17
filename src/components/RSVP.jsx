@@ -1,15 +1,35 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-const RSVP = () => {
+const RSVP = ({ guestName }) => {
     const [status, setStatus] = useState(null); // 'attending', 'not_attending'
     const [guests, setGuests] = useState(1);
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
-        // Logic to save RSVP could go here
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Guardar en Firestore
+            await addDoc(collection(db, 'confirmaciones'), {
+                nombre: guestName,
+                estado: status === 'attending' ? 'asistira' : 'no_asistira',
+                acompanantes: status === 'attending' ? parseInt(guests) : 0,
+                timestamp: serverTimestamp(),
+            });
+
+            setSubmitted(true);
+        } catch (err) {
+            console.error('Error al guardar:', err);
+            setError('Error al guardar tu respuesta. Intenta de nuevo.');
+            setLoading(false);
+        }
     };
 
     if (submitted) {
@@ -40,6 +60,8 @@ const RSVP = () => {
                 <p className="rsvp-intro">Por favor, confírmanos tu asistencia antes del 1 de Junio de 2026</p>
 
                 <form onSubmit={handleSubmit} className="rsvp-form">
+                    {error && <div style={{ color: '#d32f2f', marginBottom: '20px', textAlign: 'center' }}>{error}</div>}
+                    
                     <div className="radio-group">
                         <div
                             className={`radio-option ${status === 'attending' ? 'selected' : ''}`}
@@ -75,9 +97,9 @@ const RSVP = () => {
                     <button
                         type="submit"
                         className="submit-btn"
-                        disabled={!status}
+                        disabled={!status || loading}
                     >
-                        Confirmar
+                        {loading ? 'Guardando...' : 'Confirmar'}
                     </button>
                 </form>
             </motion.div>
