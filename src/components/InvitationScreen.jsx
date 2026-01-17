@@ -117,7 +117,7 @@ const InvitationScreen = ({ guestName }) => {
                             transition={{ duration: 0.4 }}
                         >
                             <img
-                                src="/foto.jpg"
+                                src="./foto.jpg"
                                 alt="Kelly & Neisdel"
                                 className="couple-photo"
                             />

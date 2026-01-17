@@ -10,7 +10,7 @@ function App() {
 
   const playMusic = () => {
     if (!audioRef.current) {
-      audioRef.current = new Audio('/mi historia de amor.mp3');
+      audioRef.current = new Audio('./mi historia de amor.mp3');
       audioRef.current.loop = true;
       audioRef.current.volume = 0.5;
     }
