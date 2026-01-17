@@ -25,7 +25,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LA_BODA_NYD }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_CREDENTIALS }}
           channelId: live
           projectId: la-boda-nyd
       
