@@ -1,4 +1,4 @@
-name: Deploy to Firebase and GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -21,16 +21,9 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_CREDENTIALS }}
-          channelId: live
-          projectId: la-boda-nyd
-      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
