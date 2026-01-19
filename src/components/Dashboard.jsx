@@ -36,12 +36,21 @@ const Dashboard = () => {
 
     const descargarExcel = () => {
         const headers = ['Nombre', 'Estado', 'Acompañantes', 'Fecha'];
-        const rows = filtradas.map(c => [
-            c.nombre,
-            c.estado === 'asistira' ? 'Asistirá' : 'No asistirá',
-            c.acompanantes || 0,
-            c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString() : 'N/A'
-        ]);
+        const rows = filtradas.map(c => {
+            let fechaStr = 'N/A';
+            if (c.timestamp) {
+                try {
+                     const fecha = c.timestamp.toDate ? c.timestamp.toDate() : new Date(c.timestamp);
+                     fechaStr = fecha.toLocaleDateString();
+                } catch (e) { console.error(e); }
+            }
+            return [
+                c.nombre,
+                c.estado === 'asistira' ? 'Asistirá' : 'No asistirá',
+                c.acompanantes || 0,
+                fechaStr
+            ];
+        });
 
         let csv = headers.join(',') + '\n';
         rows.forEach(row => {

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import WelcomeScreen from './components/WelcomeScreen';
 import InvitationScreen from './components/InvitationScreen';
 import Dashboard from './components/Dashboard';
+import BackgroundEffects from './components/BackgroundEffects';
 import './index.css';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <BackgroundEffects />
       {step === 'welcome' && (
         <WelcomeScreen onComplete={handleWelcomeComplete} />
       )}
